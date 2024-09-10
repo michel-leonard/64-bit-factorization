@@ -28,11 +28,13 @@ int is_prime(ulong n) {
 	static const ulong bases[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
 	static const int n_bases = (int) sizeof(*bases);
 	for (int i = 0; i < n_bases; ++i)
-		if (n % bases[i] == 0) return n == bases[i];
-	if (n < bases[n_bases - 1]) return 0;
+		if (n % bases[i] == 0)
+			return n == bases[i];
+	if (n < bases[n_bases - 1] * bases[n_bases - 1])
+		return 1 < n;
 	// Depending on the size of the number, we don't need to test all the bases.
 	int lim = n < 2152302898747 ? n < 25326001 ? n < 2047 ? 1 : n < 1373653 ? 2 : 3 : n < 3215031751 ? 4 :
-	5 : n < 341550071728321 ? n < 3474749660383 ? 6 : 7 : n < 3825123056546413051 ? 9 : 12, res = 1, a = 0;
+		5 : n < 341550071728321 ? n < 3474749660383 ? 6 : 7 : n < 3825123056546413051 ? 9 : 12, res = 1, a = 0;
 	ulong b, c;
 	for (b = n - 1; ~b & 1; b >>= 1, ++a);
 	for (int i = 0; i < lim && res; ++i)
